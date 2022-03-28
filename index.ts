@@ -1,16 +1,13 @@
 #!/usr/bin/env node
 import chalk from "chalk";
 import boxen from "boxen";
-import fs from "fs";
 const $ = console.log;
-
-const details = JSON.parse(fs.readFileSync("./package.json").toString());
 
 const greet = () => {
     const welcomeMessage =
-        chalk.green("Welcome!") +
-        " " +
-        chalk.red(`sql-cleaner v${details?.version}`);
+        chalk.green("Welcome! ") +
+        chalk.red("sql-cleaner ") +
+        chalk.yellowBright("v0.0.1");
 
     const welcomeBox = boxen(welcomeMessage, {
         padding: 1,

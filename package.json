@@ -9,7 +9,11 @@
     "start": "npm run build && node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["sql" , "sql-cleaner" , "mysql"],
+  "keywords": [
+    "sql",
+    "sql-cleaner",
+    "mysql"
+  ],
   "author": "keivan-sf",
   "license": "ISC",
   "devDependencies": {
@@ -20,9 +24,11 @@
   },
   "dependencies": {
     "boxen": "^6.2.1",
-    "chalk": "^5.0.1"
+    "chalk": "^5.0.1",
+    "dotenv": "^16.0.0",
+    "mysql2": "^2.3.3"
   },
   "bin": {
-    "sql-cleaner" : "index.js"
+    "sql-cleaner": "index.js"
   }
 }

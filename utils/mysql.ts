@@ -38,6 +38,11 @@ const query = (query: string): Promise<any> =>
         });
     });
 
-const db = { connect, end, query };
+const readAllTables = async (): Promise<string[]> => {
+    const results = await query(`SHOW TABLES`);
+    return results.map((table: any) => Object.values(table)[0]);
+}
+
+const db = { connect, end, query, readAllTables };
 
 export default db;

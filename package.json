@@ -1,0 +1,27 @@
+{
+  "name": "sql-cleaner",
+  "version": "0.1",
+  "description": "Clean mysql database tables",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node .",
+    "build": "npx tsc -p .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["sql" , "sql-cleaner" , "mysql"],
+  "author": "keivan-sf",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^17.0.23",
+    "ts-node": "^10.7.0",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.6.3"
+  },
+  "dependencies": {
+    "boxen": "^6.2.1",
+    "chalk": "^5.0.1"
+  },
+  "bin": {
+    "sql-cleaner" : "index.js"
+  }
+}

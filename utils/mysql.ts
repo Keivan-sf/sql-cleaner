@@ -28,6 +28,16 @@ const end = (): Promise<mysql2.Connection> =>
         });
     });
 
-const db = { connect, end };
+const query = (query: string): Promise<any> =>
+    new Promise((resolve, reject) => {
+        connection.query(query, (err, results) => {
+            if (err) {
+                reject(err);
+            }
+            resolve(results);
+        });
+    });
+
+const db = { connect, end, query };
 
 export default db;

@@ -1,40 +1,27 @@
 #!/usr/bin/env node
 import { config } from "dotenv";
 config();
-import chalk from "chalk";
-import boxen from "boxen";
 import db from "./utils/mysql.js";
-const $ = console.log;
+import { $, $err, $success, $exit , greet } from "./utils/styles.js";
 
-const greet = () => {
-    const welcomeMessage =
-        chalk.green("Welcome! ") +
-        chalk.red("sql-cleaner ") +
-        chalk.yellowBright("v0.0.1");
-
-    const welcomeBox = boxen(welcomeMessage, {
-        padding: 1,
-        borderColor: "blue",
-        borderStyle: "round",
-    });
-
-    $(welcomeBox);
-};
-
-greet();
+$(greet());
 
 (async () => {
-
-    const connection = await db.connect().catch(err => {
-        $("Error connecting to database: ", err);
-        process.exit(1);
+    const connection = await db.connect().catch((err) => {
+        $exit("Error connecting to database: ", err);
     });
 
-    $(chalk.green("✓ Connected to database"));
+    $success("Connected to database");
+
+    const tableResults = await db.query(`SHOW TABLES`).catch((err) => {
+        $exit("Error reading tables from database: ", err);
+    });
+
+    const tables = tableResults.map((table: any) => Object.values(table)[0]);
+
+    console.log(tables);
 
     await db.end();
 
-    $(chalk.green("✓ Disconnected from database"));
-
-})()
-
+    $success("Disconnected from database");
+})();

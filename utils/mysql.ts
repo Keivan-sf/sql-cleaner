@@ -1,6 +1,4 @@
-import chalk from "chalk";
 import * as mysql2 from "mysql2";
-import { $, $warn } from "./styles.js";
 let connection: mysql2.Connection;
 interface CleanTablesOptions {
     ignore?: string[];
@@ -19,18 +17,7 @@ const createConnection = (URI: string): Promise<mysql2.Connection> =>
         });
     });
 
-const connect = async () => {
-    let DB: string = process.env.DATABASE_URL as string;
-    if (!process.env.DATABASE_URL) {
-        DB = "mysql://root:@localhost/test";
-        $warn(
-            `Environment variable ${chalk.white(
-                "DATABASE_URL"
-            )} was not found \n> Using default connection URI: ${chalk.white(
-                `${DB}`
-            )}`
-        );
-    }
+const connect = async (DB: string) => {
     connection = await createConnection(DB);
     return connection;
 };

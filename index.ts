@@ -1,13 +1,27 @@
 #!/usr/bin/env node
+import chalk from "chalk";
 import { config } from "dotenv";
 config();
 import db from "./utils/mysql.js";
 import { $, $err, $success, $exit, $warn, greet } from "./utils/styles.js";
+import { disconnectAndExit } from "./utils/errors.js";
 
 $(greet());
 
+let DB: string = process.env.DATABASE_URL as string;
+if (!process.env.DATABASE_URL) {
+    DB = "mysql://root:@localhost/test";
+    $warn(
+        `Environment variable ${chalk.white(
+            "DATABASE_URL"
+        )} was not found \n> Using default connection URL: ${chalk.white(
+            `${DB}`
+        )}`
+    );
+}
+
 (async () => {
-    const connection = await db.connect().catch((err) => {
+    const connection = await db.connect(DB).catch((err) => {
         $exit("Error connecting to database: ", err);
     });
 
@@ -26,12 +40,18 @@ $(greet());
     try {
         await db.deleteFromTables(tables);
     } catch (err) {
-        await db.rollback();
-        await db.end();
-        $exit("Error deleting data from tables: ", err);
+        await disconnectAndExit(
+            ["Error deleting data from tables: ", err],
+            true
+        );
     }
 
-    await db.commit();
+    await db.commit().catch(async (err) => {
+        await disconnectAndExit(
+            ["Error deleting data from tables: ", err],
+            true
+        );
+    });
 
     await db.end();
 

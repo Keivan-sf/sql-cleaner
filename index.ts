@@ -2,11 +2,12 @@
 import { config } from "dotenv";
 config();
 import db from "./utils/mysql.js";
-import { $, $err, $success, $exit, greet } from "./utils/styles.js";
+import { $, $err, $success, $exit, $warn, greet } from "./utils/styles.js";
 
 $(greet());
 
 (async () => {
+
     const connection = await db.connect().catch((err) => {
         $exit("Error connecting to database: ", err);
     });

@@ -1,5 +1,6 @@
+import chalk from "chalk";
 import * as mysql2 from "mysql2";
-const DB = process.env.DATABASE_URL ?? "mysql://root:@localhost/test";
+import { $, $warn } from "./styles.js";
 let connection: mysql2.Connection;
 
 const createConnection = (URI: string): Promise<mysql2.Connection> =>
@@ -14,6 +15,17 @@ const createConnection = (URI: string): Promise<mysql2.Connection> =>
     });
 
 const connect = async () => {
+    let DB:string = process.env.DATABASE_URL as string;
+    if (!process.env.DATABASE_URL) {
+        DB = "mysql://root:@localhost/test";
+        $warn(
+            `Environment variable ${chalk.white(
+                "DATABASE_URL"
+            )} was not found \n> Using default connection URI: ${chalk.white(
+                `${DB}`
+            )}`
+        );
+    }
     connection = await createConnection(DB);
     return connection;
 };
@@ -41,7 +53,7 @@ const query = (query: string): Promise<any> =>
 const readAllTables = async (): Promise<string[]> => {
     const results = await query(`SHOW TABLES`);
     return results.map((table: any) => Object.values(table)[0]);
-}
+};
 
 const db = { connect, end, query, readAllTables };
 

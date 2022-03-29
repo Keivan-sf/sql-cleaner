@@ -2,6 +2,11 @@ import chalk from "chalk";
 import * as mysql2 from "mysql2";
 import { $, $warn } from "./styles.js";
 let connection: mysql2.Connection;
+interface CleanTablesOptions {
+    ignore?: string[];
+}
+
+const defaultIgnore = ["_prisma_migrations"];
 
 const createConnection = (URI: string): Promise<mysql2.Connection> =>
     new Promise((resolve, reject) => {
@@ -15,7 +20,7 @@ const createConnection = (URI: string): Promise<mysql2.Connection> =>
     });
 
 const connect = async () => {
-    let DB:string = process.env.DATABASE_URL as string;
+    let DB: string = process.env.DATABASE_URL as string;
     if (!process.env.DATABASE_URL) {
         DB = "mysql://root:@localhost/test";
         $warn(
@@ -55,6 +60,21 @@ const readAllTables = async (): Promise<string[]> => {
     return results.map((table: any) => Object.values(table)[0]);
 };
 
-const db = { connect, end, query, readAllTables };
+const deleteFromTables = async (
+    tables: string[],
+    options: CleanTablesOptions = {}
+): Promise<string[]> => {
+    options.ignore = options?.ignore || [];
+    options.ignore.push(...defaultIgnore);
+    for (const table of tables) {
+        if (options.ignore.includes(table)) {
+            continue;
+        }
+        await query(`DELETE FROM ${table}`);
+    }
+    return tables;
+};
+
+const db = { connect, end, query, readAllTables, deleteFromTables };
 
 export default db;

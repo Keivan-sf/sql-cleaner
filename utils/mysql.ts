@@ -55,6 +55,29 @@ const query = (query: string): Promise<any> =>
         });
     });
 
+const beginTransaction = (): Promise<mysql2.Connection> =>
+    new Promise((resolve, reject) => {
+        connection.beginTransaction((err) => {
+            if (err) return reject(err);
+            resolve(connection);
+        });
+    });
+
+const commit = (): Promise<mysql2.Connection> =>
+    new Promise((resolve, reject) => {
+        connection.commit((err) => {
+            if (err) return reject(err);
+            resolve(connection);
+        });
+    });
+
+const rollback = (): Promise<mysql2.Connection> =>
+    new Promise((resolve) => {
+        connection.rollback(() => {
+            resolve(connection);
+        });
+    });
+
 const readAllTables = async (): Promise<string[]> => {
     const results = await query(`SHOW TABLES`);
     return results.map((table: any) => Object.values(table)[0]);
@@ -75,6 +98,15 @@ const deleteFromTables = async (
     return tables;
 };
 
-const db = { connect, end, query, readAllTables, deleteFromTables };
+const db = {
+    connect,
+    end,
+    query,
+    readAllTables,
+    deleteFromTables,
+    beginTransaction,
+    commit,
+    rollback,
+};
 
 export default db;

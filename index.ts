@@ -19,9 +19,19 @@ $(greet());
 
     $success("Read all the tables from database");
 
-    await db.deleteFromTables(tables).catch((err) => {
-        $exit("Error deleting data from tables: ", err);
+    await db.beginTransaction().catch((err) => {
+        $exit("Error starting transaction: ", err);
     });
+
+    try {
+        await db.deleteFromTables(tables);
+    } catch (err) {
+        await db.rollback();
+        await db.end();
+        $exit("Error deleting data from tables: ", err);
+    }
+
+    await db.commit();
 
     await db.end();
 

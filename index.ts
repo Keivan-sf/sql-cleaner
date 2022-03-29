@@ -3,12 +3,13 @@ import chalk from "chalk";
 import { config } from "dotenv";
 config();
 import db from "./utils/mysql.js";
-import { $, $err, $success, $exit, $warn, greet } from "./utils/styles.js";
+import { $, $success, $exit, $warn, greet } from "./utils/styles.js";
 import { disconnectAndExit } from "./utils/errors.js";
 
 $(greet());
 
 let DB: string = process.env.DATABASE_URL as string;
+
 if (!process.env.DATABASE_URL) {
     DB = "mysql://root:@localhost/test";
     $warn(

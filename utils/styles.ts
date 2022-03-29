@@ -18,7 +18,7 @@ export const $exit = (...data: any[]) => {
 
 export const $warn = (...data: any[]) => {
     $(chalk.yellow(`⚠ WARNING: ${data.join(" ")}`));
-}
+};
 
 export const greet = () => {
     const welcomeMessage =

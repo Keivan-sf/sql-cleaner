@@ -29,6 +29,10 @@
         "dotenv": "^16.0.0",
         "mysql2": "^2.3.3"
     },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/Keivan-sf/sql-cleaner.git"
+    },
     "bin": {
         "sql-cleaner": "index.js"
     }

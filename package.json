@@ -2,11 +2,12 @@
     "name": "sql-cleaner",
     "version": "0.0.1",
     "description": "Clean mysql database tables",
-    "main": "index.js",
+    "main": "./.dist/index.js",
     "type": "module",
     "scripts": {
-        "build": "npx tsc -p .",
-        "start": "npm run build && node index.js",
+        "dist": "npx tsc -p . --outDir ./.dist",
+        "build": "npm install && npm run dist",
+        "start": "npm run dist && node ./.dist/index.js",
         "test": "echo \"Error: no test specified\" && exit 1",
         "align": "npx prettier . --write"
     },
@@ -34,6 +35,6 @@
         "url": "git://github.com/Keivan-sf/sql-cleaner.git"
     },
     "bin": {
-        "sql-cleaner": "index.js"
+        "sql-cleaner": "./.dist/index.js"
     }
 }

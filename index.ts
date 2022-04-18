@@ -28,6 +28,14 @@ if (!process.env.DATABASE_URL) {
 
     $success("Connected to database");
 
+    await db.variables("autocommit", "0").catch((err) => {
+        $exit("Error Setting 'autocommit' to 'OFF': ", err);
+    });
+
+    await db.variables("FOREIGN_KEY_CHECKS", "0").catch((err) => {
+        $exit("Error Setting 'FOREIGN_KEY_CHECKS' to 'OFF': ", err);
+    });
+
     const tables = (await db.readAllTables().catch((err) => {
         $exit("Error reading tables from database: ", err);
     })) as string[];

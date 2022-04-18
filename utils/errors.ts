@@ -1,4 +1,4 @@
-import db from "./mysql.js";
+import db from "./mysql/index.js";
 import { $exit } from "./styles.js";
 export const disconnectAndExit = async (err: any[], rollback = false) => {
     if (rollback) {

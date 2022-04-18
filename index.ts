@@ -2,7 +2,7 @@
 import chalk from "chalk";
 import { config } from "dotenv";
 config();
-import db from "./utils/mysql.js";
+import db from "./utils/mysql/index.js";
 import { $, $success, $exit, $warn, greet } from "./utils/styles.js";
 import { disconnectAndExit } from "./utils/errors.js";
 
@@ -22,7 +22,7 @@ if (!process.env.DATABASE_URL) {
 }
 
 (async () => {
-    const connection = await db.connect(DB).catch((err) => {
+    await db.connect(DB).catch((err) => {
         $exit("Error connecting to database: ", err);
     });
 

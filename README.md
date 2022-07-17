@@ -16,9 +16,7 @@ and then:
 npm i -g .
 ```
 
-### Usage
-
-for the time being there are no additional flags so just follow the simple steps below
+## Setup
 
 **1) Set an environment variable called `DATABASE_URL`**
 
@@ -40,6 +38,15 @@ sql-cleaner
 
 > Note that `_prisma_migrations` table will be ignored during the process. this will become optional later on
 
+###  Exceptions `-e` `--exception`
+
+You can force the app to ignore one/multiple tables while cleaning others
+
+> ⚠️ Warning: `FOREIGN_KEY_CHECKS` are disabled. meaning you will not get any foreign key error in case you break a relation using exceptions
+
+```bash
+sql-cleaner -e tableName1 tableName2
+```
 ### Development state
 
 - ~~making the app mess with mysql variables in order to avoid foreign-key errors and have a healthy transaction~~ Done

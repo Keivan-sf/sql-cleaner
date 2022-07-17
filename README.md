@@ -44,4 +44,4 @@ sql-cleaner
 
 - ~~making the app mess with mysql variables in order to avoid foreign-key errors and have a healthy transaction~~ Done
 
--   create flags/options such as `exceptions`
+- ~~create flags/options such as `exceptions`~~ Done

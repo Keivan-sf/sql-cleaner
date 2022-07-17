@@ -2,17 +2,21 @@
 import chalk from "chalk";
 import { config } from "dotenv";
 config();
-import { $, $warn, greet } from "./utils/libs/styles.js";
+import { $, $exit, $warn, greet } from "./utils/libs/styles.js";
 import { program } from "commander";
 import { cleanTables } from "./utils/cleanTables.js";
 import { CleanTablesOptions } from "./interfaces/mysql.js";
 
-program.option("-e, --exception <string...>" , "ignore one/multiple tables while deleting data").parse();
+program.option(
+    "-e, --exception <string...>",
+    "ignore one/multiple tables while deleting data"
+);
+
+program.parse();
+
 const options = program.opts();
 
-let programOpts: CleanTablesOptions = {ignore: options.exception ?? []};
-
-console.log(programOpts);
+let programOpts: CleanTablesOptions = { ignore: options.exception ?? [] };
 
 $(greet());
 

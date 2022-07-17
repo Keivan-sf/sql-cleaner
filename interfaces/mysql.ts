@@ -1,3 +1,3 @@
 export interface CleanTablesOptions {
-    ignore?: string[];
+    ignore: string[];
 }

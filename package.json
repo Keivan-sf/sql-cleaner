@@ -9,7 +9,8 @@
         "build": "npm install && npm run dist",
         "start": "npm run dist && node ./.dist/index.js",
         "test": "echo \"Error: no test specified\" && exit 1",
-        "align": "npx prettier . --write"
+        "align": "npx prettier . --write",
+        "devbuild": "npm run dist && npm i -g ."
     },
     "keywords": [
         "sql",
@@ -27,6 +28,7 @@
     "dependencies": {
         "boxen": "^6.2.1",
         "chalk": "^5.0.1",
+        "commander": "^9.4.0",
         "dotenv": "^16.0.0",
         "mysql2": "^2.3.3"
     },

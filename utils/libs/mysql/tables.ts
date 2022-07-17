@@ -1,5 +1,5 @@
 import DBC from "./connection.js";
-import { CleanTablesOptions } from "../../interfaces/mysql.js";
+import { CleanTablesOptions } from "../../../interfaces/mysql.js";
 const defaultIgnore = ["_prisma_migrations"];
 
 class DB_TABLES {
@@ -10,9 +10,9 @@ class DB_TABLES {
 
     static deleteFromTables = async (
         tables: string[],
-        options: CleanTablesOptions = {}
+        options: CleanTablesOptions = {ignore: []}
     ): Promise<string[]> => {
-        options.ignore = options?.ignore || [];
+        options.ignore = options?.ignore ?? [];
         options.ignore.push(...defaultIgnore);
         for (const table of tables) {
             if (options.ignore.includes(table)) {

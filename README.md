@@ -1,3 +1,5 @@
+<h3 align="center">Checkout <a href="https://twitter.com/search?q=%23mahsa_amini">#Mahsa_Amini</a>, Support women of Iran 🇮🇷</h3>
+
 # Mysql cleaner
 
 A simple cli to clean the whole data from tables in order to ease the development
